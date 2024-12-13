@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Hearts</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            background-color: #f8f9fa;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 2rem;
+            animation: fadeOut 2s forwards, grow 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes grow {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(3);
+            }
+        }
+
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff69b4;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="center-text">Ti amo bubas</div>
+
+    <script>
+        // Function to create a heart element at the touch location
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+            heart.textContent = '❤️';
+
+            document.body.appendChild(heart);
+
+            // Remove the heart after the animation ends
+            setTimeout(() => {
+                heart.remove();
+            }, 2000);
+        }
+
+        // Add touch event listener to the body
+        document.body.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0]; // Get the first touch point
+            createHeart(touch.clientX, touch.clientY);
+        });
+
+        // Add click support for desktop testing
+        document.body.addEventListener('click', (e) => {
+            createHeart(e.clientX, e.clientY);
+        });
+    </script>
+</body>
+</html>
